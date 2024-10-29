@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Гра: Вгадай число</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+        #error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Гра: Вгадай число</h1>
+    <p>Я загадав число від 0 до 20. Спробуй вгадати!</p>
+    <input type="number" id="userInput" placeholder="Введіть число" />
+    <button onclick="guessNumber()">Вгадати</button>
+    <button onclick="startGame()">Почати гру спочатку</button>
+    
+    <div id="output"></div>
+    <div id="error"></div>
+
+    <script>
+        let guess;
+        let count = 0;
+        let isPlaying = false;
+
+        function startGame() {
+            guess = Math.floor(Math.random() * 21); // Генерація числа від 0 до 20
+            count = 0;
+            isPlaying = true;
+            document.getElementById("output").innerText = "Гра почалася! Введіть ваше число.";
+            document.getElementById("error").innerText = "";
+            document.getElementById("userInput").value = "";
+            document.getElementById("userInput").focus();
+        }
+
+        function guessNumber() {
+            if (!isPlaying) {
+                alert("Спочатку почніть гру!");
+                return;
+            }
+            
+            const number = parseInt(document.getElementById("userInput").value);
+            count++;
+
+            if (isNaN(number)) {
+                document.getElementById("error").innerText = "Будь ласка, введіть число!";
+                return;
+            }
+
+            document.getElementById("error").innerText = "";
+
+            if (number === guess) {
+                document.getElementById("output").innerText = `Ви вгадали! Кількість спроб: ${count}.`;
+                isPlaying = false;
+            } else if (number > guess) {
+                document.getElementById("output").innerText = "Число менше, спробуйте ще раз.";
+            } else {
+                document.getElementById("output").innerText = "Число більше, спробуйте ще раз.";
+            }
+
+            document.getElementById("userInput").value = "";
+            document.getElementById("userInput").focus();
+        }
+    </script>
+</body>
+</html>
